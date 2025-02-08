@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import typeDefs from './typeDefs/index.js';
+import typeDefs from './schema/index.js';
 import resolvers from './resolvers/index.js';
 import { PORT } from './config/env.js';
 
