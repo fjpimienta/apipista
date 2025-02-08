@@ -1,4 +1,3 @@
-
 # Node.js
 node_modules/
 npm-debug.log
@@ -63,11 +62,6 @@ bower_components/
 # Windows
 Thumbs.db
 ehthumbs.db
-````
 
 # dist
 dist
-
-</file>
-
-Este archivo `.gitignore` excluye archivos y carpetas comunes que no son necesarios en un repositorio, como `node_modules`, archivos de logs, archivos de configuración de IDEs, y más. Puedes agregar o eliminar entradas según las necesidades específicas de tu proyecto.
