@@ -1,24 +1,26 @@
 import gql from 'graphql-tag';
+import Student, { IStudent } from '../../models/Student.js';
 
 export const studentsTypeDefs = gql`
   type Student {
-    id: String
-    name: String
-    lastName: String
-    tutor: String
-    phone: String
-    email: String
-    order: Int
-    active: Boolean
-    registerUser: String
-    updateUser: String
-    registerDate: String
-    updateDate: String
+    id: ID!
+    name: String!
+    lastName: String!
+    tutor: String!
+    phone: String!
+    email: String!
+    order: Int!
+    active: Boolean!
+    registerUser: String!
+    updateUser: String!
+    registerDate: String!
+    updateDate: String!
   }
 
   type Query {
     students: [Student]
-    student(id: String): Student
+    student(id: ID!): Student
+    studentByName(name: String!): [Student]
   }
 
   type Mutation {
@@ -35,24 +37,56 @@ export const studentsTypeDefs = gql`
       registerDate: String!,
       updateDate: String!
     ): Student
+    updateStudent(
+      id: ID!,
+      name: String,
+      lastName: String,
+      tutor: String,
+      phone: String,
+      email: String,
+      order: Int,
+      active: Boolean,
+      updateUser: String,
+      updateDate: String
+    ): Student
+    deleteStudent(id: ID!): Boolean
+    activateStudent(id: ID!): Student
+    deactivateStudent(id: ID!): Student
   }
 `;
 
 export const studentsResolvers = {
   Query: {
-    students: () => {
-      // Implementar lógica para obtener todos los estudiantes
-      return [];
+    students: async () => {
+      const students = await Student.find();
+      console.log(`Recuperados ${students.length} estudiantes.`);
+      console.log(students);
+      return students;
     },
-    student: (_parent: any, _args: { id: string }) => {
-      // Implementar lógica para obtener un estudiante por ID
-      return null;
+    student: async (_parent: any, args: { id: string }) => {
+      return await Student.findById(args.id);
+    },
+    studentByName: async (_parent: any, args: { name: string }) => {
+      return await Student.find({ name: new RegExp(args.name, 'i') });
     },
   },
   Mutation: {
-    createStudent: (_parent: any, _args: { name: string, lastName: string, tutor: string, phone: string, email: string, order: number, active: boolean, registerUser: string, updateUser: string, registerDate: string, updateDate: string }) => {
-      // Implementar lógica para crear un nuevo estudiante
-      return null;
+    createStudent: async (_parent: any, args: IStudent) => {
+      const student = new Student(args);
+      return await student.save();
+    },
+    updateStudent: async (_parent: any, args: { id: string } & Partial<IStudent>) => {
+      return await Student.findByIdAndUpdate(args.id, args, { new: true });
+    },
+    deleteStudent: async (_parent: any, args: { id: string }) => {
+      await Student.findByIdAndDelete(args.id);
+      return true;
+    },
+    activateStudent: async (_parent: any, args: { id: string }) => {
+      return await Student.findByIdAndUpdate(args.id, { active: true }, { new: true });
+    },
+    deactivateStudent: async (_parent: any, args: { id: string }) => {
+      return await Student.findByIdAndUpdate(args.id, { active: false }, { new: true });
     },
   },
 };
