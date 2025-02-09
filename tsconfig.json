@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "target": "ES2020", // Asegurarse de que el target esté configurado a ES2017 o superior
+    "module": "esnext", // Cambiar el módulo a esnext
+    "moduleResolution": "node", // Agregar esta línea
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
