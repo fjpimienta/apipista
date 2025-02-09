@@ -5,6 +5,8 @@ import { reservationsTypeDefs, reservationsResolvers } from './reservations/inde
 import { paymentsTypeDefs, paymentsResolvers } from './payments/index.js';
 import { reportsTypeDefs, reportsResolvers } from './reports/index.js';
 import { studentsTypeDefs, studentsResolvers } from './students/index.js';
+import { cutsTypeDefs, cutsResolvers } from './cuts/index.js';
+import { salesTypeDefs, salesResolvers } from './sales/index.js';
 
 export const typeDefs = mergeTypeDefs([
   usersTypeDefs,
@@ -13,6 +15,8 @@ export const typeDefs = mergeTypeDefs([
   paymentsTypeDefs,
   reportsTypeDefs,
   studentsTypeDefs,
+  cutsTypeDefs,
+  salesTypeDefs,
 ]);
 
 export const resolvers = [
@@ -22,4 +26,6 @@ export const resolvers = [
   paymentsResolvers,
   reportsResolvers,
   studentsResolvers,
+  cutsResolvers,
+  salesResolvers,
 ];
