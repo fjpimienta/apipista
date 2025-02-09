@@ -1,19 +1,35 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { typeDefs, resolvers } from './modules/index.js';
-import { PORT } from './config/env.js';
+import connectDB from './config/db.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 async function startServer() {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
+  try {
+    await connectDB();
 
-  const { url } = await startStandaloneServer(server, {
-    listen: { port: PORT },
-  });
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+    });
 
-  console.log(`🚀 Server ready at ${url}`);
+    const port = parseInt(process.env.PORT || '4000', 10);
+
+    const { url } = await startStandaloneServer(server, {
+      listen: { port },
+    });
+
+    console.log(`🚀 Server ready at ${url}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error starting server: ${error.message}`);
+    } else {
+      console.error('Unknown error starting server');
+    }
+    process.exit(1);
+  }
 }
 
 startServer();
