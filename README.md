@@ -23,7 +23,7 @@ Este proyecto es una API para la gestión de una renta de patines, utilizando el
 
 3. Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
    ```env
-   MONGODB_URI=mongodb://fjpimienta:09Fj197327Mr1976@localhost:27017/?authSource=admin
+   MONGODB_URI=mongodb://fjpimienta:09Fj197327Mr1976@localhost:27017/pistahielo?authSource=admin
    PORT=4000
    ```
 
@@ -44,23 +44,32 @@ Este proyecto es una API para la gestión de una renta de patines, utilizando el
 │   ├── config
 │   │   └── db.ts
 │   ├── modules
-│   │   ├── users
+│   │   ├── articles
+│   │   │   ├── index.ts
+│   │   │   ├── resolvers.ts
+│   │   │   └── typeDefs.ts
+│   │   ├── classes
+│   │   │   ├── index.ts
+│   │   │   ├── resolvers.ts
+│   │   │   └── typeDefs.ts
+│   │   ├── cuts
 │   │   │   └── index.ts
 │   │   ├── inventory
-│   │   │   └── index.ts
-│   │   ├── reservations
 │   │   │   └── index.ts
 │   │   ├── payments
 │   │   │   └── index.ts
 │   │   ├── reports
 │   │   │   └── index.ts
-│   │   ├── students
-│   │   │   └── index.ts
-│   │   ├── cuts
+│   │   ├── reservations
 │   │   │   └── index.ts
 │   │   ├── sales
 │   │   │   └── index.ts
-│   │   └── index.ts
+│   │   ├── students
+│   │   │   └── index.ts
+│   │   ├── teachers
+│   │   │   └── index.ts
+│   │   └── users
+│   │       └── index.ts
 │   └── index.ts
 ├── .env
 ├── package.json
@@ -148,6 +157,44 @@ Este proyecto es una API para la gestión de una renta de patines, utilizando el
 - `Mutation`
   - `createProduct(name: String!, price: Float!)`: Crea un nuevo producto.
   - `createSale(date: String!, totalAmount: Float!, products: [ID!]!)`: Crea una nueva venta.
+
+### Artículos
+
+- `Query`
+  - `articles`: Obtiene todos los artículos.
+  - `article(id: ID!)`: Obtiene un artículo por ID.
+  - `articlesByAuthor(author: String!)`: Obtiene artículos por autor.
+- `Mutation`
+  - `createArticle(title: String!, content: String!, author: String!, publishedDate: String!, tags: [String!]!, active: Boolean!, registerUser: String!, updateUser: String!, registerDate: String!, updateDate: String!)`: Crea un nuevo artículo.
+  - `updateArticle(id: ID!, title: String, content: String, author: String, publishedDate: String, tags: [String!], active: Boolean, updateUser: String, updateDate: String)`: Actualiza un artículo.
+  - `deleteArticle(id: ID!)`: Elimina un artículo.
+  - `activateArticle(id: ID!)`: Activa un artículo.
+  - `deactivateArticle(id: ID!)`: Desactiva un artículo.
+
+### Clases
+
+- `Query`
+  - `classes`: Obtiene todas las clases.
+  - `class(id: ID!)`: Obtiene una clase por ID.
+- `Mutation`
+  - `createClass(name: String!, cost: Float!, startTime: String!, endTime: String!, teacher: ID!, active: Boolean!, registerUser: String!, updateUser: String!, registerDate: String!, updateDate: String!)`: Crea una nueva clase.
+  - `updateClass(id: ID!, name: String, cost: Float, startTime: String, endTime: String, teacher: ID, active: Boolean, updateUser: String, updateDate: String)`: Actualiza una clase.
+  - `deleteClass(id: ID!)`: Elimina una clase.
+  - `activateClass(id: ID!)`: Activa una clase.
+  - `deactivateClass(id: ID!)`: Desactiva una clase.
+
+### Profesores
+
+- `Query`
+  - `teachers`: Obtiene todos los profesores.
+  - `teacher(id: ID!): Teacher`: Obtiene un profesor por ID.
+  - `teacherByName(name: String!): [Teacher]`: Obtiene profesores por nombre.
+- `Mutation`
+  - `createTeacher(name: String!, lastName: String!, subject: String!, phone: String!, email: String!, active: Boolean!, registerUser: String!, updateUser: String!, registerDate: String!, updateDate: String!)`: Crea un nuevo profesor.
+  - `updateTeacher(id: ID!, name: String, lastName: String, subject: String, phone: String, email: String, active: Boolean, updateUser: String, updateDate: String)`: Actualiza un profesor.
+  - `deleteTeacher(id: ID!)`: Elimina un profesor.
+  - `activateTeacher(id: ID!)`: Activa un profesor.
+  - `deactivateTeacher(id: ID!)`: Desactiva un profesor.
 
 ## Contribuciones
 
