@@ -5,7 +5,6 @@ export const usersTypeDefs = gql`
     id: ID!
     name: String!
     email: String!
-    password: String!
     active: Boolean!
     image: String
     profile: String!
@@ -25,7 +24,7 @@ export const usersTypeDefs = gql`
     createUser(
       name: String!,
       email: String!,
-      password: String!,
+      password: String!,  # Solo se usa en la creación
       active: Boolean!,
       image: String,
       profile: String!,
@@ -38,7 +37,7 @@ export const usersTypeDefs = gql`
       id: ID!,
       name: String,
       email: String,
-      password: String,
+      password: String,  # Permitir actualización, pero encriptada
       active: Boolean,
       image: String,
       profile: String,

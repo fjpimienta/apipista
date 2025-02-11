@@ -1,5 +1,6 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
 import { articlesTypeDefs, articlesResolvers } from './articles/index.js';
+import { authTypeDefs, authResolvers } from './auth/index.js';
 import { classesTypeDefs, classesResolvers } from './classes/index.js';
 import { cutsTypeDefs, cutsResolvers } from './cuts/index.js';
 import { inventoryTypeDefs, inventoryResolvers } from './inventory/index.js';
@@ -13,6 +14,7 @@ import { usersTypeDefs, usersResolvers } from './users/index.js';
 
 export const typeDefs = mergeTypeDefs([
   articlesTypeDefs,
+  authTypeDefs,
   classesTypeDefs,
   cutsTypeDefs,
   inventoryTypeDefs,
@@ -27,6 +29,7 @@ export const typeDefs = mergeTypeDefs([
 
 export const resolvers = [
   articlesResolvers,
+  authResolvers,
   classesResolvers,
   cutsResolvers,
   inventoryResolvers,

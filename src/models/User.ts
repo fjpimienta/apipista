@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 export interface IUser extends Document {
   name: string;
@@ -11,6 +12,7 @@ export interface IUser extends Document {
   updateUser?: string;
   registerDate: Date;
   updateDate?: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const UserSchema: Schema = new Schema({
@@ -25,5 +27,10 @@ const UserSchema: Schema = new Schema({
   registerDate: { type: Date, required: true, default: Date.now },
   updateDate: { type: Date, required: false, default: Date.now },
 });
+
+UserSchema.methods.comparePassword = async function (candidatePassword: string) {
+  console.log('candidatePassword:', candidatePassword);
+  return bcrypt.compare(candidatePassword, this.password);
+};
 
 export default mongoose.model<IUser>('User', UserSchema);
