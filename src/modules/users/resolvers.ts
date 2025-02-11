@@ -30,6 +30,10 @@ export const usersResolvers = {
       }
       return await User.findByIdAndUpdate(args.id, args, { new: true }).select('-password'); // 👈 Excluir contraseña
     },
+    updateUserPassword: async (_parent: any, args: { email: string, password: string }) => {
+      const hashedPassword = await bcrypt.hash(args.password, SALT_ROUNDS);
+      return await User.findOneAndUpdate({ email: args.email }, { password: hashedPassword }, { new: true }).select('-password');
+    },
     deleteUser: async (_parent: any, args: { id: string }) => {
       await User.findByIdAndDelete(args.id);
       return true;

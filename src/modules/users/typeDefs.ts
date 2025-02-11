@@ -5,6 +5,7 @@ export const usersTypeDefs = gql`
     id: ID!
     name: String!
     email: String!
+    password: String!
     active: Boolean!
     image: String
     profile: String!
@@ -37,12 +38,15 @@ export const usersTypeDefs = gql`
       id: ID!,
       name: String,
       email: String,
-      password: String,  # Permitir actualización, pero encriptada
       active: Boolean,
       image: String,
       profile: String,
       updateUser: String,
       updateDate: String
+    ): User
+    updateUserPassword(
+      email: String!,
+      password: String!
     ): User
     deleteUser(id: ID!): Boolean
     activateUser(id: ID!): User
