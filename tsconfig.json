@@ -1,15 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Asegurarse de que el target esté configurado a ES2017 o superior
-    "module": "esnext", // Cambiar el módulo a esnext
-    "moduleResolution": "node", // Agregar esta línea
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "types": ["node"],
+    "sourceMap": true,
+    "lib": ["esnext"]
   },
-  "include": ["src"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

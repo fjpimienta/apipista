@@ -4,8 +4,6 @@ export const articlesResolvers = {
   Query: {
     articles: async () => {
       const articles = await Article.find();
-      console.log(`Recuperados ${articles.length} artículos.`);
-      console.log(articles);
       return articles;
     },
     article: async (_parent: any, args: { id: string }) => {

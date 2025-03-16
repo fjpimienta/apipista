@@ -4,8 +4,6 @@ export const classesResolvers = {
   Query: {
     classes: async () => {
       const classes = await Class.find().populate('teacher');
-      console.log(`Recuperadas ${classes.length} clases.`);
-      console.log(classes);
       return classes;
     },
     class: async (_parent: any, args: { id: string }) => {

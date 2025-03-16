@@ -1,4 +1,2 @@
-import { usersTypeDefs } from './typeDefs.js';
-import { usersResolvers } from './resolvers.js';
-
-export { usersTypeDefs, usersResolvers };
+export { usersTypeDefs } from './typeDefs.js';
+export { usersResolvers } from './resolvers.js';

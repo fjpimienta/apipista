@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 
-export const PORT = parseInt(process.env.PORT || '4000', 10);
+// export const PORT = parseInt(process.env.PORT || '4000', 10);

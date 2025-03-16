@@ -7,7 +7,6 @@ export const usersResolvers = {
   Query: {
     users: async () => {
       const users = await User.find().select('-password'); // 👈 Excluir contraseña
-      console.log(`Recuperados ${users.length} usuarios.`);
       return users;
     },
     user: async (_parent: any, args: { id: string }) => {

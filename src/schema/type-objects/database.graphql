@@ -1,0 +1,13 @@
+type CollectionInfo {
+  name: String!
+  count: Int!
+}
+
+type DatabaseInfo {
+  totalCollections: Int!
+  collections: [CollectionInfo!]!
+}
+
+extend type Query {
+  databaseInfo: DatabaseInfo!
+}

@@ -5,8 +5,6 @@ export const cutsResolvers = {
   Query: {
     cutsX: async () => {
       const cutsX = await CutX.find();
-      console.log(`Recuperados ${cutsX.length} cortes X.`);
-      console.log(cutsX);
       return cutsX;
     },
     cutX: async (_parent: any, args: { id: string }) => {
@@ -14,8 +12,6 @@ export const cutsResolvers = {
     },
     cutsY: async () => {
       const cutsY = await CutY.find().populate('cutsX');
-      console.log(`Recuperados ${cutsY.length} cortes Y.`);
-      console.log(cutsY);
       return cutsY;
     },
     cutY: async (_parent: any, args: { id: string }) => {

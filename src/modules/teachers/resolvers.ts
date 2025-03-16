@@ -4,8 +4,6 @@ export const teachersResolvers = {
   Query: {
     teachers: async () => {
       const teachers = await Teacher.find();
-      console.log(`Recuperados ${teachers.length} profesores.`);
-      console.log(teachers);
       return teachers;
     },
     teacher: async (_parent: any, args: { id: string }) => {

@@ -9,11 +9,8 @@ const generateToken = (user: any) => {
 export const authResolvers = {
   Mutation: {
     login: async (_parent: any, { email, password }: { email: string, password: string }) => {
-      console.log('email: ', email);
-      console.log('password: ', password);
       const user = await User.findOne({ email });
       if (!user || !(await user.comparePassword(password))) {
-        console.log('user: ', user);
         throw new GraphQLError('Invalid credentials', {
           extensions: {
             code: 'INVALID_CREDENTIALS',
@@ -21,7 +18,6 @@ export const authResolvers = {
         });
       }
       const token = generateToken(user);
-      console.log('token: ', token);
       return { token, user };
     },
     oauthLogin: async (_parent: any, { accessToken }: { accessToken: string }) => {

@@ -4,8 +4,6 @@ export const studentsResolvers = {
   Query: {
     students: async () => {
       const students = await Student.find();
-      console.log(`Recuperados ${students.length} estudiantes.`);
-      console.log(students);
       return students;
     },
     student: async (_parent: any, args: { id: string }) => {
