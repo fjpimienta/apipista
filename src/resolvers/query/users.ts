@@ -14,10 +14,20 @@ const resolversUsersQuery: IResolvers = {
       }
     },
     async userId(_, __, context) {
-      return new UsersService(_, __, context).next();
+      const result = await new UsersService(_, __, context).next();
+      return result.userId;  // Retornamos solo el userId
     },
     async me(_, __, { token }) {
       return new UsersService(_, __, { token }).auth();
+    },
+    async user(_, { id }, context) {
+      try {
+        const user = await new UsersService(_, { id }, context).getUser(id);
+        return user;
+      } catch (error) {
+        console.error('Error en user query:', error);
+        return null;
+      }
     }
   }
 };

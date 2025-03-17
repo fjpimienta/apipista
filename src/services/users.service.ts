@@ -165,10 +165,11 @@ class UsersService extends ResolversOperationsService {
   // Obtener el siguiente elemento
   async next() {
     const result = await this.nextId(this.collection);
+    // No cambiar la estructura del objeto retornado
     return {
       status: result.status,
       message: result.message,
-      userId: result.catId
+      userId: result.catId?.toString() // Aseguramos que userId sea string
     };
   }
 
@@ -297,6 +298,17 @@ class UsersService extends ResolversOperationsService {
       html
     };
     return new MailService().send(mail);
+  }
+
+  // Obtener usuario por ID
+  async getUser(id: string) {
+    try {
+      const user = await findOneElement(this.getDB(), this.collection, { id });
+      return user;
+    } catch (error) {
+      console.error('Error getting user by ID:', error);
+      return null;
+    }
   }
 
   // Comprobar que no esta en blanco ni es indefinido
