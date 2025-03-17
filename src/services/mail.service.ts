@@ -1,5 +1,5 @@
-import transporter from '../config/mailer';
-import { IMailOptions } from '../interfaces/email.interface';
+import transporter from '../config/mailer.js';
+import { IMailOptions } from '../interfaces/email.interface.js';
 import { SentMessageInfo } from 'nodemailer';
 
 class MailService {

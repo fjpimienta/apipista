@@ -8,8 +8,7 @@ import JWT from '../lib/jwt.js';
 import { IVariables } from '../interfaces/variable.interface.js';
 import MailService from './mail.service.js';
 import { IUser } from '../interfaces/user.interface.js';
-import { IContext } from '../interfaces/context.interface.js';
-
+   
 class UsersService extends ResolversOperationsService {
   collection = COLLECTIONS.USERS;
   catalogName = 'Usuarios';

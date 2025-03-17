@@ -1,6 +1,6 @@
-import { IPaginationOptions } from './pagination-options.interface';
-import { IUser } from './user.interface';
-import { ICatalog } from './catalog.interface';
+import { IPaginationOptions } from './pagination-options.interface.js';
+import { IUser } from './user.interface.js';
+import { ICatalog } from './catalog.interface.js';
 
 export interface IVariables {
   id?: string | number;

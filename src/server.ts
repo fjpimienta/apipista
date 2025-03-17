@@ -7,10 +7,8 @@ import { dirname, join } from 'path';
 import environments from './config/environments.js';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { BaseContext } from '@apollo/server';
 import schema from './schema/index.js';
 import Database from './lib/database.js';
-import { IContext } from './interfaces/context.interface.js';
 import chalk from 'chalk';
 import logger from './utils/logger.js';
 import loggerMiddleware from './utils/loggerMiddleware.js';
@@ -20,8 +18,8 @@ import multer from 'multer';
 import * as path from 'path';
 import fileService from './services/fileService.js';
 import { execSync } from 'child_process';
-import { startStandaloneServer } from '@apollo/server/standalone';
 import { Db } from 'mongodb';
+import { IContextData } from './interfaces/context-data.interface.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -120,7 +118,7 @@ async function init(): Promise<void> {
         return {
           db: dbInstance,
           token
-        } as IContext;
+        } as IContextData;
       },
     })
   );

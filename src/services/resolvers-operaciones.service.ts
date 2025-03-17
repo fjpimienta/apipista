@@ -1,18 +1,22 @@
 import { Db } from 'mongodb';
-import { IContextData } from '../interfaces/context-data.interface';
-import { IVariables } from '../interfaces/variable.interface';
-import { pagination, paginationProducts } from '../lib/pagination';
+import { IContextData } from '../interfaces/context-data.interface.js';
+import { IVariables } from '../interfaces/variable.interface.js';
+import { pagination } from '../lib/pagination.js';
 import {
   deleteOneElement, findElements, findOneElement, insertOneElement,
   updateOneElement, asignDocumentId, insertManyElements, deleteManyElements, findElementsProducts
-} from '../lib/db-operations';
+} from '../lib/db-operations.js';
+
 import slugify from 'slugify';
-import logger from '../utils/logger';
+const slugifyAny: any = slugify;
+
+import logger from '../utils/logger.js';
 
 class ResolversOperationsService {
   protected root: object;
   protected variables: IVariables;
   protected context: IContextData;
+  
 
   constructor(root: object, variables: object, context: IContextData) {
     this.root = root;

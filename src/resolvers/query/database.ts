@@ -1,6 +1,6 @@
 import { IResolvers } from '@graphql-tools/utils';
-import { Db, Collection } from 'mongodb';
-import { ICollection } from '../../../interfaces/collection.interface.js';
+import { Db } from 'mongodb';
+import { ICollection } from '../../interfaces/collection.interface.js';
 
 const resolversQueryDatabase: IResolvers = {
   Query: {
