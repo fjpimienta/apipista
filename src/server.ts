@@ -177,7 +177,7 @@ async function getDatabaseInfo() {
 // Iniciar la aplicación
 try {
   await init();
-  await getDatabaseInfo();
+  // await getDatabaseInfo();                           // Descomentar para ver información de la base de datos
 } catch (error) {
   console.error('Error iniciando el servidor:', error);
   process.exit(1);

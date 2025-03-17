@@ -3,10 +3,18 @@ import UsersService from '../../services/users.service.js';
 
 const resolversUsersMutation: IResolvers = {
   Mutation: {
-    async register(_, { name, email, password, profile }, context) {
-      return new UsersService(_, { user: { name, email, password, profile } }, context).register();
+    async register(_, variables, context) {
+      return new UsersService(_, variables, context).register();
+    },
+    async updateUser(_, variables, context) {
+      return new UsersService(_, variables, context).modify();
+    },
+    async deleteUser(_, variables, context) {
+      return new UsersService(_, variables, context).delete();
+    },
+    async blockUser(_, { id, unblock, admin }, context) {
+      return new UsersService(_, { id }, context).unblock(unblock, admin);
     }
-    // ... otros resolvers de mutación
   }
 };
 

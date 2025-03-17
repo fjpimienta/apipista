@@ -50,6 +50,6 @@ export const usersTypeDefs = gql`
     ): User
     deleteUser(id: ID!): Boolean
     activateUser(id: ID!): User
-    deactivateUser(id: ID!): User
+    blockUser(id: ID!): User
   }
 `;
