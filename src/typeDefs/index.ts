@@ -1,4 +1,4 @@
-import { usersTypeDefs } from './users';
+import { usersTypeDefs } from './users.js';
 
 const typeDefs = {
     ...usersTypeDefs,

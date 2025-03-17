@@ -4,8 +4,10 @@
   "main": "dist/index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "node --experimental-specifier-resolution=node dist/server.js",
-    "dev": "node --no-warnings --loader ts-node/esm src/server.ts",
+    "startxxx": "node --experimental-specifier-resolution=node dist/server.js",
+    "devxxx": "node --no-warnings --loader ts-node/esm src/server.ts",
+    "start": "node dist/server.js", 
+    "dev": "tsx src/server.ts",
     "lint": "eslint . --ext .ts",
     "generate-ssl": "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout src/private.key -out src/certificate.crt -subj \"/C=ES/ST=State/L=City/O=Organization/CN=localhost\""
   },
@@ -17,35 +19,36 @@
   "dependencies": {
     "@apollo/server": "^4.11.3",
     "@graphql-tools/load-files": "^7.0.1",
+    "@graphql-tools/merge": "^9.0.3",
     "@graphql-tools/schema": "^10.0.23",
+    "@graphql-tools/utils": "^10.1.2",
+    "@types/express": "^4.17.21",
     "bcrypt": "^5.1.1",
     "chalk": "^5.4.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "express": "^4.18.2",
     "graphql": "^16.10.0",
+    "graphql-import-node": "^0.0.5",
     "graphql-merge-resolvers": "^1.1.16",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
     "slugify": "^1.6.6",
-    "winston": "^3.17.0",
     "ts-node": "^10.9.2",
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "compression": "^1.7.4",
-    "multer": "^1.4.5-lts.1",
-    "@types/express": "^4.17.21",
-    "graphql-import-node": "^0.0.5",
-    "@graphql-tools/merge": "^9.0.3",
-    "@graphql-tools/utils": "^10.1.2"
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/chalk": "^0.4.31",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/mongoose": "^5.11.96",
     "@types/multer": "^1.4.12",
@@ -54,7 +57,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-oauth2": "^1.4.17",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.7.3",
-    "@types/express": "^4.17.21"
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
   }
 }
