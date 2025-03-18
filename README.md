@@ -66,7 +66,7 @@ apipista/
 │   ├── services/      # Servicios
 │   ├── utils/         # Utilidades
 │   └── server.ts      # Punto de entrada
-├── dist/              # Código compilado
+├── build/              # Código compilado
 ├── uploads/           # Archivos subidos
 └── logs/             # Archivos de registro
 ```

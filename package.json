@@ -1,12 +1,13 @@
 {
   "name": "apipista",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "build/server.js",
   "scripts": {
     "compile": "tsc",
-    "startxxx": "node --experimental-specifier-resolution=node dist/server.js",
+    "build": "tsc -p . && ncp src/schema build/schema",
+    "startxxx": "node --experimental-specifier-resolution=node build/server.js",
     "devxxx": "node --no-warnings --loader ts-node/esm src/server.ts",
-    "start": "node dist/server.js", 
+    "start": "node build/server.js", 
     "dev": "tsx src/server.ts",
     "lint": "eslint . --ext .ts",
     "generate-ssl": "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout src/private.key -out src/certificate.crt -subj \"/C=ES/ST=State/L=City/O=Organization/CN=localhost\""
