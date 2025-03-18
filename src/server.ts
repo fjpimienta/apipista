@@ -132,7 +132,7 @@ async function init(): Promise<void> {
     ? https.createServer(httpsOptions, app)
     : httpServer;
 
-  const PORT = process.env.PORT || 3002;
+  const PORT = process.env.PORT || 3003;
 
   // Iniciar el servidor
   finalServer.listen(PORT, () => {

@@ -40,7 +40,7 @@ cp .env.example .env
 4. Configurar el archivo .env:
 ```env
 MONGODB_URI=mongodb://usuario:contraseña@localhost:27017/pistahielo
-PORT=3002
+PORT=3003
 NODE_ENV=development
 JWT_SECRET=tu-secreto-jwt
 ```
@@ -88,13 +88,13 @@ apipista/
 ## API GraphQL
 
 El endpoint GraphQL está disponible en:
-- Desarrollo: `https://localhost:3002/graphql`
+- Desarrollo: `https://localhost:3003/graphql`
 - Producción: `https://tudominio.com/graphql`
 
 ### Playground
 
 El GraphQL Playground está habilitado en desarrollo en:
-`https://localhost:3002/graphql`
+`https://localhost:3003/graphql`
 
 ## Seguridad
 

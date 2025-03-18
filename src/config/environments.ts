@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 
-export const PORT = parseInt(process.env.PORT || '3002', 10);
+export const PORT = parseInt(process.env.PORT || '3003', 10);
 
 const environment = dotenv.config(
   {
