@@ -10,7 +10,7 @@
     "start": "node build/server.js", 
     "dev": "tsx src/server.ts",
     "lint": "eslint . --ext .ts",
-    "generate-ssl": "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout src/private.key -out src/certificate.crt -subj \"/C=ES/ST=State/L=City/O=Organization/CN=localhost\""
+    "generate-ssl": "mkdir -p build/ssl && node -e \"require('child_process').execSync('openssl req -x509 -newkey rsa:2048 -keyout build/ssl/private.key -out build/ssl/certificate.crt -days 365 -nodes -subj \\\"/C=ES/ST=State/L=City/O=Organization/CN=localhost\\\"')\""
   },
   "keywords": [],
   "author": "",

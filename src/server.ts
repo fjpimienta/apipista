@@ -30,28 +30,68 @@ if (process.env.NODE_ENV !== 'production') {
   console.log(env);
 }
 
-// Check if the certificate and key files exist
-const keyPath = join(__dirname, 'private.key');
-const certPath = join(__dirname, 'certificate.crt');
+// Configurar rutas de certificados en la carpeta build
+const certDir = join(process.cwd(), 'build/ssl');
+const keyPath = join(certDir, 'private.key');
+const certPath = join(certDir, 'certificate.crt');
 
-if (!fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
-  console.log('Certificados SSL no encontrados. Generando nuevos certificados...');
+// Asegurar que existe el directorio de certificados
+if (!fs.existsSync(certDir)) {
+  fs.mkdirSync(certDir, { recursive: true });
+}
+
+// Función para verificar validez del certificado
+function isCertificateValid(certPath: string): boolean {
   try {
-    execSync('npm run generate-ssl', { stdio: 'inherit' });
-    console.log('Certificados SSL generados exitosamente.');
+    const cert = fs.readFileSync(certPath);
+    const certObj = new (require('crypto').X509Certificate)(cert);
+    const validTo = new Date(certObj.validTo);
+    return validTo > new Date();
+  } catch {
+    return false;
+  }
+}
+
+// Función para generar nuevos certificados
+function generateNewCertificates(): void {
+  console.log('Generando nuevos certificados SSL en build/ssl...');
+  try {
+    // Comando openssl modificado para especificar la ubicación de salida
+    const opensslCommand = `openssl req -x509 -newkey rsa:2048 -keyout "${keyPath}" -out "${certPath}" -days 365 -nodes -subj "/C=ES/ST=State/L=City/O=Organization/CN=localhost"`;
+    execSync(opensslCommand, { stdio: 'inherit' });
+    console.log('Certificados SSL generados exitosamente en build/ssl.');
+    
+    // Eliminar certificados antiguos de src si existen
+    const srcKeyPath = join(__dirname, 'private.key');
+    const srcCertPath = join(__dirname, 'certificate.crt');
+    if (fs.existsSync(srcKeyPath)) {
+      fs.unlinkSync(srcKeyPath);
+      console.log('Certificado antiguo private.key eliminado de src.');
+    }
+    if (fs.existsSync(srcCertPath)) {
+      fs.unlinkSync(srcCertPath);
+      console.log('Certificado antiguo certificate.crt eliminado de src.');
+    }
   } catch (error) {
     console.error('Error al generar certificados SSL:', error);
-    console.log('Usando configuración HTTP en su lugar...');
-    // Continuar sin SSL
   }
+}
+
+// Verificar existencia y validez de certificados
+if (!fs.existsSync(keyPath) || 
+    !fs.existsSync(certPath) || 
+    !isCertificateValid(certPath)) {
+  generateNewCertificates();
 }
 
 let httpsOptions = {};
 try {
-  httpsOptions = {
-    key: fs.readFileSync(keyPath),
-    cert: fs.readFileSync(certPath),
-  };
+  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    httpsOptions = {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
+  }
 } catch (error) {
   console.warn('No se pudieron cargar los certificados SSL. El servidor se ejecutará sin HTTPS.');
 }
