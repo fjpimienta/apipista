@@ -1,7 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
-import { createServer } from 'http';
+import { createServer } from 'http'; // Usamos http.createServer
+import https from 'https'; // Usamos https.createServer
+import { Server as HttpServer } from 'http'; // Importamos el tipo de servidor HTTP
+import { Server as HttpsServer } from 'https'; // Importamos el tipo de servidor HTTPS
+import { RequestListener } from 'http'; // Importamos RequestListener si lo necesitas
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import environments from './config/environments.js';
@@ -12,7 +16,6 @@ import Database from './lib/database.js';
 import chalk from 'chalk';
 import logger from './utils/logger.js';
 import loggerMiddleware from './utils/loggerMiddleware.js';
-import https from 'https';
 import fs from 'fs';
 import multer from 'multer';
 import * as path from 'path';
@@ -23,6 +26,12 @@ import { IContextData } from './interfaces/context-data.interface.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Define el tipo para httpsOptions
+interface HttpsOptions {
+  key: Buffer;
+  cert: Buffer;
+}
 
 // Configuración de las variables de entorno (lectura)
 if (process.env.NODE_ENV !== 'production') {
@@ -38,6 +47,7 @@ const certPath = join(certDir, 'certificate.crt');
 // Asegurar que existe el directorio de certificados
 if (!fs.existsSync(certDir)) {
   fs.mkdirSync(certDir, { recursive: true });
+  console.log('Directorio de certificados creado');
 }
 
 // Función para verificar validez del certificado
@@ -60,7 +70,7 @@ function generateNewCertificates(): void {
     const opensslCommand = `openssl req -x509 -newkey rsa:2048 -keyout "${keyPath}" -out "${certPath}" -days 365 -nodes -subj "/C=ES/ST=State/L=City/O=Organization/CN=localhost"`;
     execSync(opensslCommand, { stdio: 'inherit' });
     console.log('Certificados SSL generados exitosamente en build/ssl.');
-    
+
     // Eliminar certificados antiguos de src si existen
     const srcKeyPath = join(__dirname, 'private.key');
     const srcCertPath = join(__dirname, 'certificate.crt');
@@ -78,13 +88,14 @@ function generateNewCertificates(): void {
 }
 
 // Verificar existencia y validez de certificados
-if (!fs.existsSync(keyPath) || 
-    !fs.existsSync(certPath) || 
-    !isCertificateValid(certPath)) {
+if (!fs.existsSync(keyPath) ||
+  !fs.existsSync(certPath) ||
+  !isCertificateValid(certPath)) {
   generateNewCertificates();
 }
 
-let httpsOptions = {};
+let httpsOptions: HttpsOptions | {} = {};
+
 try {
   if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
     httpsOptions = {
@@ -94,14 +105,14 @@ try {
   }
 } catch (error) {
   console.warn('No se pudieron cargar los certificados SSL. El servidor se ejecutará sin HTTPS.');
+  httpsOptions = {}; // Asegúrate de que httpsOptions esté vacío
 }
 
 // Ruta donde se guardarán los archivos
 const uploadFolder = path.join(__dirname, '../uploads/files');
-
-// Verificar y crear la carpeta de destino si no existe
 if (!fs.existsSync(uploadFolder)) {
   fs.mkdirSync(uploadFolder, { recursive: true });
+  console.log('Carpeta de uploads creada');
 }
 
 const storage = multer.diskStorage({
@@ -128,7 +139,13 @@ async function init(): Promise<void> {
   const app = express();
   const httpServer = createServer(app);
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: '*',
+      methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type', 'x-apollo-operation-name', 'Authorization'],
+    })
+  );
   app.use(compression());
   app.use(express.json({ limit: '50mb' }));
   app.use(loggerMiddleware(logger));
@@ -139,6 +156,9 @@ async function init(): Promise<void> {
   apolloServer = new ApolloServer({
     schema,
     formatError: (error) => {
+      if (process.env.NODE_ENV === 'production') {
+        return new Error('Internal server error');
+      }
       return error;
     },
   });
@@ -147,8 +167,6 @@ async function init(): Promise<void> {
 
   app.use(
     '/graphql',
-    cors<cors.CorsRequest>(),
-    express.json(),
     expressMiddleware(apolloServer, {
       context: async ({ req }) => {
         if (!dbInstance) {
@@ -163,18 +181,15 @@ async function init(): Promise<void> {
     })
   );
 
-  // Agrega el servicio de archivos y otras rutas
   app.use('/files', fileService);
   app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-  // Configuración del servidor final (HTTP o HTTPS)
-  const finalServer = Object.keys(httpsOptions).length > 0 
-    ? https.createServer(httpsOptions, app)
+  const finalServer: HttpServer | HttpsServer = (Object.keys(httpsOptions).length > 0)
+    ? https.createServer(httpsOptions as HttpsOptions, app)
     : httpServer;
 
   const PORT = process.env.PORT || 3003;
 
-  // Iniciar el servidor
   finalServer.listen(PORT, () => {
     if (process.env.PRODUCTION !== 'true') {
       logger.info('=================SERVER API GRAPHQL=====================');
@@ -190,18 +205,18 @@ async function getDatabaseInfo() {
   try {
     if (dbInstance) {
       console.log('\n===================DATABASE INFO===================');
-      
+
       // Listar todas las colecciones
       const collections = await dbInstance.listCollections().toArray();
       console.log('\n===================COLLECTIONS===================');
       console.log(`Total Collections: ${collections.length}`);
-      
+
       // Mostrar cada colección y su cantidad de documentos
       for (const collection of collections) {
         const count = await dbInstance.collection(collection.name).countDocuments();
         console.log(`Collection: ${collection.name} - Documents: ${count}`);
       }
-      
+
       // Específicamente para usuarios
       const usersCount = await dbInstance.collection('users').countDocuments();
       console.log('\n===================USERS===================');
