@@ -1,47 +1,39 @@
-"""
-   Se especifican la información detallada del usuario.
-   Consideraciones:
-      email = usuario del cliente de la base de datos.
-      fecha de nacimiento y registro en formado ISO.
-"""
-
-type User  {
-  password: String!
-  role: Role!
-  registerdate: String!
-  id: ID!
-  name: String!
-  lastname: String!
-  email: String!
-  active:Boolean
-  phone: String
-  addresses: [Address]
-   "Cliente de Stripe"
-  stripeCustomer: String
-  policy: Boolean
+type User {
+    id: ID!
+    name: String!
+    lastname: String
+    email: String!
+    password: String
+    role: Role!
+    active: Boolean
+    phone: String
+    addresses: [Address]
+    policy: Boolean
+    image: String
+    profile: String
+    registerUser: String
+    updateUser: String
+    registerDate: String
+    updateDate: String
 }
 
 type Address {
-  c_pais: String!
-  d_pais: String!
-  c_estado: String!
-  d_estado: String!
-  c_mnpio: String!
-  d_mnpio: String!
-  c_ciudad: String
-  d_ciudad: String
-  d_asenta: String!
-  directions: String!
-  phone: String
-  references: String
-  d_codigo: String!
-  dir_invoice: Boolean
-  dir_delivery: Boolean
-  dir_delivery_main: Boolean
-  outdoorNumber: String
-  interiorNumber: String
-}
-
-type Query {
-  users(page: Int, itemsPage: Int, active: String, role: String): [User]!
+    c_pais: String!
+    d_pais: String!
+    c_estado: String!
+    d_estado: String!
+    c_mnpio: String!
+    d_mnpio: String!
+    c_ciudad: String
+    d_ciudad: String
+    d_asenta: String!
+    directions: String!
+    phone: String
+    references: String
+    d_codigo: String!
+    dir_invoice: Boolean
+    dir_delivery: Boolean
+    dir_delivery_main: Boolean
+    outdoorNumber: String
+    interiorNumber: String
 }

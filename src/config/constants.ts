@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const SECRET_KEY =
-  process.env.SECRET || 'hosting3m-ecommerce-09Fj1973';
+  process.env.JWT_SECRET || 'hosting3m-ecommerce-09Fj1973';
 
 export enum COLLECTIONS {
   USERS = 'users',

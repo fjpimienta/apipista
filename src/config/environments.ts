@@ -14,6 +14,18 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
+const getEnvSuffix = (): string => {
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return '_PROD';
+    case 'qa':
+      return '_QA';
+    case 'development':
+    default:
+      return '_DEV';
+  }
+};
+
 export interface IEnvironment {
   fedex: {
     client_id: string;
@@ -23,11 +35,13 @@ export interface IEnvironment {
 }
 
 export const getEnvironment = (): IEnvironment => {
+  const suffix = getEnvSuffix();
+  
   const environment: IEnvironment = {
     fedex: {
-      client_id: process.env.FEDEX_CLIENT_ID || '',
-      client_secret: process.env.FEDEX_CLIENT_SECRET || '',
-      fedex_account: process.env.FEDEX_ACCOUNT || '',
+      client_id: process.env[`FEDEX_CLIENT_ID${suffix}`] || '',
+      client_secret: process.env[`FEDEX_CLIENT_SECRET${suffix}`] || '',
+      fedex_account: process.env[`FEDEX_ACCOUNT${suffix}`] || '',
     }
   };
 

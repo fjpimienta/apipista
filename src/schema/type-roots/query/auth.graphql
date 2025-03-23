@@ -1,0 +1,4 @@
+type Query {
+  me: ResultUser
+  login(email: String!, password: String!, include: Boolean!): ResultLogin
+}

@@ -1,19 +1,19 @@
 import 'graphql-import-node';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { loadFilesSync } from '@graphql-tools/load-files';
-import path from 'path';
+import { mergeTypeDefs } from '@graphql-tools/merge';
 import { fileURLToPath } from 'url';
+import path from 'path';
 import resolvers from '../resolvers/index.js';
-import typeDefs from '../typeDefs/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const typesArray = loadFilesSync(path.join(__dirname, './types'), {
+const typesArray = loadFilesSync(path.join(__dirname, './**/*.graphql'), {
+  recursive: true,
   extensions: ['graphql']
 });
-
-const resolversArray = loadFilesSync(path.join(__dirname, './resolvers'));
+const typeDefs = mergeTypeDefs(typesArray);
 
 const schema = makeExecutableSchema({
   typeDefs,

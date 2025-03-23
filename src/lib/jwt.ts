@@ -1,12 +1,15 @@
 import { IJwt } from '../interfaces/jwt.interface.js';
-import { EXPIRETIME, MESSAGES, SECRET_KEY } from './../config/constants.js';
+import { EXPIRETIME, MESSAGES } from './../config/constants.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class JWT {
-  private secretKey = SECRET_KEY as string;
+  private secretKey = process.env.JWT_SECRET || 'default_secret';
 
   // Informacion del payload con fecha de caducidad 24 horas por defecto
-  sign(data: IJwt, expiresIn: number = EXPIRETIME.H24) {
+  sign(data: IJwt, expiresIn: number = EXPIRETIME.H24): string {
     return jwt.sign(
       { user: data.user },
       this.secretKey,
@@ -14,10 +17,17 @@ class JWT {
     );
   }
 
-  verify(token: string) {
+  verify(token: string): string | object {
     try {
       return jwt.verify(token, this.secretKey);
-    } catch (e) {
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        return MESSAGES.TOKEN_VERICATION_FAILED;
+      }
+      if (error instanceof jwt.JsonWebTokenError) {
+        return MESSAGES.TOKEN_VERICATION_FAILED;
+      }
+      console.log('Error verificando token:', error);
       return MESSAGES.TOKEN_VERICATION_FAILED;
     }
   }

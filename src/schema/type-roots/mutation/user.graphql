@@ -1,6 +1,4 @@
-"Definiciones de los tipos de raíz"
 type Mutation {
-   "Usuarios"
    register(user: UserInput!): ResultUser
    updateUser(user: UserInput!): ResultUser
    deleteUser(id: ID!): ResultUser

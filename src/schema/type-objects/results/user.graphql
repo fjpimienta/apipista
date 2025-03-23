@@ -1,9 +1,19 @@
 type ResultUser implements Result {
-   "Estado de la operacion"
-   status: Boolean!
-   "Mensaje de la operacion para dar feedback"
-   message: String!
-   "Informacion del usuario"
-   user: User
-   userId: String
+    status: Boolean!
+    message: String!
+    user: User
+}
+
+type ResultUsers implements Result {
+    status: Boolean!
+    message: String!
+    users: [User!]
+    info: ResultInfo
+}
+
+type ResultInfo {
+    page: Int!
+    pages: Int!
+    total: Int!
+    itemsPage: Int!
 }
