@@ -75,8 +75,9 @@ class AuthService extends ResolversOperationsService {
   // Autenticar
   async auth() {
     try {
-      // Verificar si hay token
-      if (!this.getContext().token) {
+      const token = this.getContext().token;
+
+      if (!token) {
         return {
           status: false,
           message: 'No hay token proporcionado',
@@ -84,10 +85,34 @@ class AuthService extends ResolversOperationsService {
         };
       }
 
+      // Verificar formato del token
+      if (!token.startsWith('Bearer ')) {
+        return {
+          status: false,
+          message: 'Formato de token inválido. Debe ser: Bearer <token>',
+          user: null
+        };
+      }
+
+      // Extraer el token sin el "Bearer " y verificar formato
+      const tokenWithoutBearer = token.slice(7);
+      
+      // Verificar formato básico del token (debe comenzar con 'ey')
+      if (!tokenWithoutBearer.startsWith('ey')) {
+        console.log('Error: El token no tiene el formato correcto (debe comenzar con "ey")');
+        return {
+          status: false,
+          message: 'Token malformado',
+          user: null
+        };
+      }
+
       // Verificar y decodificar el token
-      const info = new JWT().verify(this.getContext().token!);
+      const info = new JWT().verify(tokenWithoutBearer);
+      console.log('Información decodificada del token:', info);
       
       if (info === MESSAGES.TOKEN_VERICATION_FAILED) {
+        console.log('Error de verificación del token:', info);
         return {
           status: false,
           message: 'Token inválido o expirado',

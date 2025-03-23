@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class JWT {
-  private secretKey = process.env.JWT_SECRET || 'default_secret';
+  private secretKey = process.env.SECRET_KEY || 'ApIPiStAsEcReT2024';
 
   // Informacion del payload con fecha de caducidad 24 horas por defecto
   sign(data: IJwt, expiresIn: number = EXPIRETIME.H24): string {
@@ -27,7 +27,6 @@ class JWT {
       if (error instanceof jwt.JsonWebTokenError) {
         return MESSAGES.TOKEN_VERICATION_FAILED;
       }
-      console.log('Error verificando token:', error);
       return MESSAGES.TOKEN_VERICATION_FAILED;
     }
   }

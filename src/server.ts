@@ -188,6 +188,10 @@ async function init(): Promise<void> {
           throw new Error('Database connection not initialized');
         }
         const token = req.headers.authorization || '';
+        // Verificar formato del token
+        if (token && !token.startsWith('Bearer ')) {
+          console.log('Formato de token incorrecto. Debe comenzar con "Bearer "');
+        }
         return {
           db: dbInstance,
           token
