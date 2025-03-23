@@ -4,10 +4,10 @@
   "main": "build/server.js",
   "scripts": {
     "compile": "tsc",
-    "build": "tsc -p . && ncp src/schema build/schema",
+    "build": "tsc -p . && ncp src/schema build/schema && ncp src/schema/type-roots build/schema/type-roots",
     "startxxx": "node --experimental-specifier-resolution=node build/server.js",
     "devxxx": "node --no-warnings --loader ts-node/esm src/server.ts",
-    "start": "node build/server.js", 
+    "start": "node build/server.js",
     "dev": "tsx src/server.ts",
     "lint": "eslint . --ext .ts",
     "generate-ssl": "mkdir -p build/ssl && node -e \"require('child_process').execSync('openssl req -x509 -newkey rsa:2048 -keyout build/ssl/private.key -out build/ssl/certificate.crt -days 365 -nodes -subj \\\"/C=ES/ST=State/L=City/O=Organization/CN=localhost\\\"')\""
@@ -57,6 +57,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/passport": "^1.0.17",
     "@types/passport-oauth2": "^1.4.17",
+    "ncp": "^2.0.0",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"

@@ -1,23 +1,27 @@
-import 'graphql-import-node';
-import { makeExecutableSchema } from '@graphql-tools/schema';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { fileURLToPath } from 'url';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import resolvers from '../resolvers/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const typesArray = loadFilesSync(path.join(__dirname, './**/*.graphql'), {
-  recursive: true,
-  extensions: ['graphql']
-});
-const typeDefs = mergeTypeDefs(typesArray);
+// Cargar los archivos en orden específico
+const baseTypes = loadFilesSync(path.join(__dirname, 'type-roots/base.graphql'));
+const typeDefinitions = loadFilesSync(path.join(__dirname, 'type-roots/types/*.graphql'));
+const queries = loadFilesSync(path.join(__dirname, 'type-roots/query/*.graphql'));
+
+const typeDefs = mergeTypeDefs([...baseTypes, ...typeDefinitions, ...queries]);
 
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers
+  resolvers,
+  resolverValidationOptions: {
+    requireResolversToMatchSchema: 'ignore',
+    requireResolversForResolveType: 'ignore'
+  }
 });
 
 export default schema;
