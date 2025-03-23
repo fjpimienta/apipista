@@ -66,24 +66,39 @@ function isCertificateValid(certPath: string): boolean {
 function generateNewCertificates(): void {
   console.log('Generando nuevos certificados SSL en build/ssl...');
   try {
-    // Comando openssl modificado para especificar la ubicación de salida
-    const opensslCommand = `openssl req -x509 -newkey rsa:2048 -keyout "${keyPath}" -out "${certPath}" -days 365 -nodes -subj "/C=ES/ST=State/L=City/O=Organization/CN=localhost"`;
-    execSync(opensslCommand, { stdio: 'inherit' });
+    // Comando OpenSSL sin la opción -quiet
+    const opensslCommand = `openssl req -x509 -newkey rsa:2048 \
+      -keyout "${keyPath}" \
+      -out "${certPath}" \
+      -days 365 \
+      -nodes \
+      -subj "/C=ES/ST=State/L=City/O=Organization/CN=localhost"`;
+
+    // Redirigir la salida a /dev/null en sistemas Unix o NUL en Windows
+    const nullDevice = process.platform === 'win32' ? 'NUL' : '/dev/null';
+    execSync(`${opensslCommand} > ${nullDevice} 2>&1`);
+
     console.log('Certificados SSL generados exitosamente en build/ssl.');
 
-    // Eliminar certificados antiguos de src si existen
+    // Eliminar certificados antiguos
     const srcKeyPath = join(__dirname, 'private.key');
     const srcCertPath = join(__dirname, 'certificate.crt');
+    
     if (fs.existsSync(srcKeyPath)) {
       fs.unlinkSync(srcKeyPath);
-      console.log('Certificado antiguo private.key eliminado de src.');
     }
     if (fs.existsSync(srcCertPath)) {
       fs.unlinkSync(srcCertPath);
-      console.log('Certificado antiguo certificate.crt eliminado de src.');
     }
   } catch (error) {
     console.error('Error al generar certificados SSL:', error);
+    // Intentar limpiar archivos parcialmente creados en caso de error
+    try {
+      if (fs.existsSync(keyPath)) fs.unlinkSync(keyPath);
+      if (fs.existsSync(certPath)) fs.unlinkSync(certPath);
+    } catch (cleanupError) {
+      console.error('Error al limpiar archivos SSL:', cleanupError);
+    }
   }
 }
 
