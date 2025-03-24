@@ -9,33 +9,6 @@ type User {
   role: Role
 }
 
-type ResultUsers {
-  status: Boolean!
-  message: String!
-  users: [User!]
-  info: ResultInfo
-}
-
-type ResultUser {
-  status: Boolean!
-  message: String!
-  user: User
-}
-
-type ResultLogin {
-  status: Boolean!
-  message: String!
-  token: String
-  user: User
-}
-
-type ResultInfo {
-  page: Int!
-  pages: Int!
-  total: Int!
-  itemsPage: Int!
-}
-
 input UserInput {
   id: ID
   name: String
@@ -45,15 +18,4 @@ input UserInput {
   registerdate: String
   active: Boolean
   role: Role
-}
-
-enum Role {
-  ADMIN
-  CLIENT
-}
-
-enum ActiveFilterEnum {
-  ALL
-  ACTIVE
-  INACTIVE
 }

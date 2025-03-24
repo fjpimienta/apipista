@@ -1,19 +1,12 @@
 type ResultUser implements Result {
-    status: Boolean!
-    message: String!
-    user: User
+  status: Boolean!
+  message: String!
+  user: User
 }
 
 type ResultUsers implements Result {
-    status: Boolean!
-    message: String!
-    users: [User!]
-    info: ResultInfo
-}
-
-type ResultInfo {
-    page: Int!
-    pages: Int!
-    total: Int!
-    itemsPage: Int!
+  status: Boolean!
+  message: String!
+  users: [User!]
+  info: ResultInfo
 }

@@ -8,14 +8,21 @@ import resolvers from '../resolvers/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Cargar los archivos en orden específico
-const baseTypes = loadFilesSync(path.join(__dirname, 'type-roots/base.graphql'));
-const typeDefinitions = loadFilesSync(path.join(__dirname, 'type-roots/types/*.graphql'));
-const queries = loadFilesSync(path.join(__dirname, 'type-roots/query/*.graphql'));
+// Cargar todos los archivos GraphQL
+const typesArray = loadFilesSync(
+  [
+    path.join(__dirname, './**/*.graphql'),     // Carga todos los archivos .graphql
+  ],
+  {
+    recursive: true
+  }
+);
 
-const typeDefs = mergeTypeDefs([...baseTypes, ...typeDefinitions, ...queries]);
+// Merge de todos los tipos
+const typeDefs = mergeTypeDefs(typesArray);
 
-const schema = makeExecutableSchema({
+// Crear y exportar el schema
+export default makeExecutableSchema({
   typeDefs,
   resolvers,
   resolverValidationOptions: {
@@ -23,5 +30,3 @@ const schema = makeExecutableSchema({
     requireResolversForResolveType: 'ignore'
   }
 });
-
-export default schema;
