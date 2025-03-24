@@ -4,20 +4,24 @@ API GraphQL para la gestión de una pista de hielo, construida con Node.js, Expr
 
 ## Características Principales
 
-- 🚀 GraphQL con Apollo Server
+- 🚀 GraphQL con Apollo Server v4
 - 🔒 Soporte HTTPS/SSL
-- 📁 Sistema de archivos integrado
-- 🔑 Autenticación JWT
+- 📁 Sistema de archivos con manejo de imágenes
+- 🔑 Autenticación JWT y roles de usuario
 - 📝 Logging con Winston
-- 🗄️ MongoDB como base de datos
+- 🗄️ MongoDB con Mongoose
 - 📦 ESM Modules
 - 🔄 Hot Reload en desarrollo
+- 📧 Sistema de envío de emails
+- 💳 Integración con pasarelas de pago
+- 🔐 Sistema de permisos basado en roles
 
 ## Requisitos Previos
 
 - Node.js >= 16
 - MongoDB >= 4.4
 - OpenSSL (para certificados SSL)
+- Cuenta de AWS S3 (opcional, para almacenamiento de archivos)
 
 ## Instalación
 
@@ -43,6 +47,11 @@ MONGODB_URI=mongodb://usuario:contraseña@localhost:27017/pistahielo
 PORT=3003
 NODE_ENV=development
 JWT_SECRET=tu-secreto-jwt
+AWS_ACCESS_KEY_ID=tu-access-key
+AWS_SECRET_ACCESS_KEY=tu-secret-key
+SMTP_HOST=smtp.servicio.com
+SMTP_USER=usuario
+SMTP_PASS=contraseña
 ```
 
 ## Scripts Disponibles
@@ -58,52 +67,74 @@ JWT_SECRET=tu-secreto-jwt
 ```
 apipista/
 ├── src/
-│   ├── config/         # Configuraciones
+│   ├── config/         # Configuraciones del sistema
 │   ├── interfaces/     # Interfaces TypeScript
 │   ├── lib/           # Bibliotecas y utilidades
+│   ├── models/        # Modelos de Mongoose
 │   ├── modules/       # Módulos de la aplicación
+│   │   ├── article/   # Gestión de artículos
+│   │   ├── auth/      # Autenticación
+│   │   ├── user/      # Gestión de usuarios
+│   │   ├── payment/   # Gestión de pagos
+│   │   └── ...
+│   ├── resolvers/     # Resolvers GraphQL
 │   ├── schema/        # Esquemas GraphQL
-│   ├── services/      # Servicios
+│   ├── services/      # Servicios externos
 │   ├── utils/         # Utilidades
 │   └── server.ts      # Punto de entrada
-├── build/              # Código compilado
-├── uploads/           # Archivos subidos
+├── build/             # Código compilado
+├── uploads/           # Archivos temporales
 └── logs/             # Archivos de registro
 ```
 
-## Módulos Disponibles
+## Módulos del Sistema
 
-- 👥 Usuarios
-- 📚 Clases
+### Gestión Principal
+- 👥 Usuarios y Roles
+- 🏢 Sucursales
+- 📊 Dashboard
+- 🎫 Reservaciones
+
+### Gestión Académica
+- 📚 Clases y Horarios
 - 🎓 Estudiantes
 - 👨‍🏫 Profesores
-- 📝 Artículos
-- 💰 Pagos
-- 📊 Reportes
-- 🎫 Reservaciones
+- 📋 Asistencias
+
+### Gestión Comercial
+- 📝 Artículos y Productos
+- 💰 Pagos y Facturación
 - 📦 Inventario
-- 💵 Ventas
-- ✂️ Cortes
+- 💵 Ventas y POS
+- ✂️ Cortes de Caja
+
+### Características Adicionales
+- 📧 Sistema de notificaciones
+- 📊 Reportes y estadísticas
+- 🗃️ Gestión de archivos
+- 🔐 Control de acceso por roles
 
 ## API GraphQL
 
 El endpoint GraphQL está disponible en:
 - Desarrollo: `https://localhost:3003/graphql`
-- Producción: `https://tudominio.com/graphql`
+- Producción: `https://api.tudominio.com/graphql`
 
-### Playground
+### Playground y Documentación
 
-El GraphQL Playground está habilitado en desarrollo en:
-`https://localhost:3003/graphql`
+- GraphQL Playground: `https://localhost:3003/graphql`
+- Documentación API: `https://localhost:3003/docs`
 
 ## Seguridad
 
-- Certificados SSL autogenerados en desarrollo
-- Protección CORS
-- Compresión de respuestas
-- Límites en tamaño de archivos
-- Validación de tipos de archivos
+- Certificados SSL/TLS
+- Protección CORS configurable
+- Rate Limiting
+- Validación de entrada
+- Sanitización de datos
 - Autenticación JWT
+- Control de acceso basado en roles
+- Logs de seguridad
 
 ## Logs
 
@@ -118,3 +149,9 @@ ISC License
 ## Autor
 
 Fernando Pimienta - fjpimienta@gmail.com
+
+## Soporte
+
+Para soporte técnico o consultas:
+- 📧 Email: fjpimienta@gmail.com
+- 💬 GitHub Issues
