@@ -33,11 +33,3 @@ input AddressInput {
   outdoorNumber: String
   interiorNumber: String
 }
-
-# input UserView {
-#    id: ID
-#    name: String!
-#    lastname: String!
-#    email: String!
-#    role: Role=CLIENT
-# }
