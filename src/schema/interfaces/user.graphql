@@ -1,4 +1,3 @@
-"User basico para definir las propiedades basicas de los elementos de la API Store"
 interface User {
   password: String!
   role: Role

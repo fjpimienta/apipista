@@ -1,4 +1,3 @@
-"Input para insertar los datos del usuario en el registro"
 input UserInput {
    password: String
    role: Role=CLIENT

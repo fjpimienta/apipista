@@ -70,13 +70,6 @@ apipista/
 │   ├── config/         # Configuraciones del sistema
 │   ├── interfaces/     # Interfaces TypeScript
 │   ├── lib/           # Bibliotecas y utilidades
-│   ├── models/        # Modelos de Mongoose
-│   ├── modules/       # Módulos de la aplicación
-│   │   ├── article/   # Gestión de artículos
-│   │   ├── auth/      # Autenticación
-│   │   ├── user/      # Gestión de usuarios
-│   │   ├── payment/   # Gestión de pagos
-│   │   └── ...
 │   ├── resolvers/     # Resolvers GraphQL
 │   ├── schema/        # Esquemas GraphQL
 │   ├── services/      # Servicios externos
