@@ -1,0 +1,6 @@
+type Mutation {
+  registerClass(class: ClassInput!): ResultClass
+  updateClass(class: ClassInput!): ResultClass
+  deleteClass(id: ID!): ResultClass
+  blockClass(id: ID!, unblock: Boolean = false): ResultClass
+}

@@ -12,6 +12,7 @@ export enum COLLECTIONS {
   STUDENTS = 'students',
   TEACHERS = 'teachers',
   ARTICLES= 'articles',
+  CLASSES= 'classes',
   BRANDS = 'brands',
   MODELS = 'models',
   CATEGORIES = 'categories',

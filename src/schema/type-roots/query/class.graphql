@@ -1,0 +1,9 @@
+type Query {
+  classes(
+    page: Int = 1,
+    itemsPage: Int = 10,
+    active: ActiveFilterEnum = ACTIVE,
+    filterName: String = ""
+  ): ResultClasses
+  class(id: ID!): ResultClass
+}

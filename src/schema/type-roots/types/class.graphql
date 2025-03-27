@@ -1,0 +1,27 @@
+type Class {
+  id: ID
+  name: String
+  cost: Float
+  startTime: String
+  endTime: String
+  teacher: ID
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}
+
+input ClassInput {
+  id: ID
+  name: String
+  cost: Float
+  startTime: String
+  endTime: String
+  teacher: ID
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}

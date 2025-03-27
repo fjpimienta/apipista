@@ -1,0 +1,12 @@
+type ResultClass implements Result {
+  status: Boolean!
+  message: String!
+  class: Class
+}
+
+type ResultClasses implements Result {
+  status: Boolean!
+  message: String!
+  classes: [Class!]
+  info: ResultInfo
+}
