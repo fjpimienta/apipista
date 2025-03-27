@@ -1,0 +1,6 @@
+type Mutation {
+  registerStudent(student: StudentInput!): ResultStudent
+  updateStudent(student: StudentInput!): ResultStudent
+  deleteStudent(id: ID!): ResultStudent
+  blockStudent(id: ID!, unblock: Boolean = false, admin: Boolean = false): ResultStudent
+}

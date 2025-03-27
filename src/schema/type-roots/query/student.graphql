@@ -1,0 +1,10 @@
+type Query {
+  students(
+    page: Int = 1,
+    itemsPage: Int = 10,
+    active: ActiveFilterEnum = ACTIVE,
+    filterName: String = "",
+    order: Int
+  ): ResultStudents
+  student(id: ID!): ResultStudent
+}
