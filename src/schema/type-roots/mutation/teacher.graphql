@@ -1,0 +1,6 @@
+type Mutation {
+  registerTeacher(teacher: TeacherInput!): ResultTeacher
+  updateTeacher(teacher: TeacherInput!): ResultTeacher
+  deleteTeacher(id: ID!): ResultTeacher
+  blockTeacher(id: ID!, unblock: Boolean = false): ResultTeacher
+}

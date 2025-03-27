@@ -1,6 +1,7 @@
 import { IPaginationOptions } from './pagination-options.interface.js';
 import { IUser } from './user.interface.js';
 import { ICatalog } from './catalog.interface.js';
+import { ITeacher } from './teacher.interface.js';
 
 export interface IVariables {
   id?: string | number;
@@ -13,6 +14,7 @@ export interface IVariables {
   slug?: string;
   pagination?: IPaginationOptions;
   user?: IUser;
+  teacher?: ITeacher;
   admin?: boolean;
   brand?: ICatalog;
   brands?: ICatalog[];

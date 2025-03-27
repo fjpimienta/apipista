@@ -1,13 +1,13 @@
 import { IAddress } from "./address.interface.js";
 
-export interface IUser extends IUserBasic {
+export interface ITeacher extends ITeacherBasic {
   password?: string;
   registerdate?: string;
   role?: string;
   active?: boolean;
 }
 
-export interface IUserBasic {
+export interface ITeacherBasic {
   id?: string;
   name?: string;
   lastname?: string;

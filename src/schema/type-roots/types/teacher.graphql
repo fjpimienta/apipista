@@ -1,0 +1,25 @@
+type Teacher {
+  id: ID
+  name: String
+  lastName: String
+  phone: String
+  email: String!
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}
+
+input TeacherInput {
+  id: ID
+  name: String
+  lastName: String
+  phone: String
+  email: String!
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}

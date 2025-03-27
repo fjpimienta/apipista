@@ -1,0 +1,9 @@
+type Query {
+  teachers(
+    page: Int = 1,
+    itemsPage: Int = 10,
+    active: ActiveFilterEnum = ACTIVE,
+    filterName: String = ""
+  ): ResultTeachers
+  teacher(id: ID!): ResultTeacher
+}

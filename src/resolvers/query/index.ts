@@ -2,11 +2,13 @@ import GMR from 'graphql-merge-resolvers';
 import resolversUsersQuery from './users.js';
 import resolversAuthsQuery from './auth.js';
 import resolversStudentsQuery from './students.js';
+import resolversTeachersQuery from './teachers.js';
 
 const queryResolvers = GMR.merge([
   resolversUsersQuery,
   resolversAuthsQuery,
-  resolversStudentsQuery
+  resolversStudentsQuery,
+  resolversTeachersQuery
 ]);
 
 export default queryResolvers;
