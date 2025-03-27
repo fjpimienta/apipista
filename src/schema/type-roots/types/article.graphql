@@ -1,0 +1,27 @@
+type Article {
+  id: ID
+  title: String
+  content: String
+  author: String
+  publishedDate: String
+  tags: [String]
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}
+
+input ArticleInput {
+  id: ID
+  title: String
+  content: String
+  author: String
+  publishedDate: String
+  tags: [String]
+  active: Boolean
+  registerUser: String
+  updateUser: String
+  registerDate: String
+  updateDate: String
+}

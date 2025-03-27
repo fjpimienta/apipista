@@ -1,0 +1,6 @@
+type Mutation {
+  registerArticle(article: ArticleInput!): ResultArticle
+  updateArticle(article: ArticleInput!): ResultArticle
+  deleteArticle(id: ID!): ResultArticle
+  blockArticle(id: ID!, unblock: Boolean = false): ResultArticle
+}

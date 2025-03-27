@@ -1,0 +1,9 @@
+type Query {
+  articles(
+    page: Int = 1,
+    itemsPage: Int = 10,
+    active: ActiveFilterEnum = ACTIVE,
+    filterName: String = ""
+  ): ResultArticles
+  article(id: ID!): ResultArticle
+}

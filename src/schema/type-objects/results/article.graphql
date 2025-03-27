@@ -1,0 +1,12 @@
+type ResultArticle implements Result {
+  status: Boolean!
+  message: String!
+  article: Article
+}
+
+type ResultArticles implements Result {
+  status: Boolean!
+  message: String!
+  articles: [Article!]
+  info: ResultInfo
+}

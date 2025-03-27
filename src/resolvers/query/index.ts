@@ -3,12 +3,14 @@ import resolversUsersQuery from './users.js';
 import resolversAuthsQuery from './auth.js';
 import resolversStudentsQuery from './students.js';
 import resolversTeachersQuery from './teachers.js';
+import resolversArticlesQuery from './articles.js';
 
 const queryResolvers = GMR.merge([
   resolversUsersQuery,
   resolversAuthsQuery,
   resolversStudentsQuery,
-  resolversTeachersQuery
+  resolversTeachersQuery,
+  resolversArticlesQuery
 ]);
 
 export default queryResolvers;
